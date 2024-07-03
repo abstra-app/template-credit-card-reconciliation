@@ -1,0 +1,5 @@
+abstra==2.19.4
+slack_sdk==3.27.2
+pandas==2.2.2
+starkcore==0.5.0
+starkbank==2.26.0
