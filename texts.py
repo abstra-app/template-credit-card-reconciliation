@@ -23,3 +23,6 @@ thread_title_pending_justification = "Expenses Pending Justification"
 no_expenses_pending_approval = "There are no expenses pending approval."
 no_expenses_pending_justification = "There are no expenses pending justification."
 user_not_registered = "User is not registered in our database."
+
+not_invoice_error = "Fatal: This does not seem to be an invoice."
+value_mismatch_error = "Fatal: The value of the invoice is {invoice_value}. This does not seem to match the expected value."
