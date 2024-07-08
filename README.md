@@ -1,6 +1,14 @@
-# Template: Credit Card Reconciliation – StarkBank
+# Abstra Template: Credit Card Reconciliation
+by Bruno Kuntz – CFO at [Deco.cx](https://deco.cx/)
 
-Workflow designed to justify, check, and approve corporate purchases via StarkBank API integration.
+Workflow designed to check, justify and approve corporate purchases via credit cards.
+
+It features Abstra's native AI for automatically identifying and verifying information within invoices and receipts.
+
+Integrations:
+- Starkbank API
+- Slack API
+- Native email
 
 ## Workflow Stages:
 
@@ -14,9 +22,9 @@ Workflow designed to justify, check, and approve corporate purchases via StarkBa
   - Add purchase information to the Abstra Table;
   - Request the credit card holder to fill out a form via e-mail notification.
 
-   **IMPORTANT:**
-    - Check for changes in the StarkBank API;
-    - Configure the Hook in your StarkBank workspace with your POST URL.
+**IMPORTANT:**
+  - Check for recent changes to the StarkBank API;
+  - Configure the Hook in your StarkBank workspace with your POST URL.
     
 ### Justify Expense (Form):
   - Justify each pending expense;
@@ -37,7 +45,7 @@ Workflow designed to justify, check, and approve corporate purchases via StarkBa
 ### Notify Expense Rejected on Slack (Script):
   - Notify the reason for rejection on Slack.
 
-## Table Schema:
+## Tables Schema:
   - team:
 
     |name|email|
