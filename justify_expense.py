@@ -5,6 +5,8 @@ from abstra.ai import prompt
 from abstra.common import get_persistent_dir
 
 from texts import expense_summary_justification, user_not_registered, no_expenses_pending_justification
+from texts import not_invoice_error, value_mismatch_error
+
 from datetime import datetime
 import uuid, os
 
@@ -27,15 +29,16 @@ def validate_invoice(value):
             ["Here is an invoice", partial['invoice']],
             format={
                 "is_invoice": {"type": "boolean", "description": "Is this an invoice?"},
+                "invoice_value": {"type": "string", "description": "What is the value of the service in dollars?"},
                 "value_match": {"type": "boolean", "description": f"Is the value of the service in dollars approximately equal to {value}?"},
                 }
             )
         
         if not invoice_info['is_invoice']:
-            return "Fatal: This does not seem to be an invoice."
+            return not_invoice_error
         
         elif not invoice_info['value_match']:
-            return f"Fatal: The value of the service does not seem to match the expected value."
+            return value_mismatch_error.format(invoice_value=invoice_info['invoice_value'])
         
     return __validate
 
