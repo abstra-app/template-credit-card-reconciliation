@@ -45,10 +45,9 @@ To use this project, some initial configurations are necessary:
        ```sh
        abstra restore
        ```
+   For guidance on creating and managing tables in Abstra, refer to the [Abstra Tables documentation](https://docs.abstra.io/cloud/tables).
 5. **Internal Registration**: Team members and corporate cards (with card number as returned by API) need to be registered to the tables.
    
-  For guidance on creating and managing tables in Abstra, refer to the [Abstra Tables documentation](https://docs.abstra.io/cloud/tables).
-
 ## General Workflow:
 To implement this system use the following scripts:
 
