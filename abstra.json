@@ -4,10 +4,12 @@
     "name": "Untitled Workspace",
     "theme": "#FAFAFA",
     "logo_url": null,
+    "favicon_url": null,
     "brand_name": " Credit Card Reconciliation",
     "main_color": "#6CDBA4",
     "font_color": null,
-    "font_family": null
+    "font_family": null,
+    "language": "en"
   },
   "kanban": {
     "access_control": {
@@ -205,5 +207,5 @@
     }
   ],
   "conditions": [],
-  "version": "10.0"
+  "version": "11.0"
 }
