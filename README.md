@@ -50,7 +50,7 @@ To use this project, some initial configurations are necessary:
   For guidance on creating and managing tables in Abstra, refer to the [Abstra Tables documentation](https://docs.abstra.io/cloud/tables).
 
 ## General Workflow:
-To implement the purchase request system use the following scripts:
+To implement this system use the following scripts:
 
 ### Getting New Expenses:
 To retrieve and justify new purchases on corporate cards registered in the tables, use:
