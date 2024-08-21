@@ -18,12 +18,12 @@ To use this project, some initial configurations are necessary:
 1. **Python Version**: Ensure Python version 3.9 or higher is installed on your system.
 2. **Environment Variables**:
 
-  The following environment variables are required for both local development and online deployment:
-
-  - `SLACK_BOT_TOCKEN`: Slack Tocken to send alerts on Slack about rejected expenses
-  - `FINANCE_TEAM_EMAIL`: Email address for the finance team (or any other team responsible for verifying expenses).
-
-  For local development, create a `.env` file at the root of the project and add the variables listed above (as in            `.env.examples`). For online deployment, configure these variables in your [environment settings](https://docs.abstra.io/cloud/envvars).
+    The following environment variables are required for both local development and online deployment:
+  
+    - `SLACK_BOT_TOCKEN`: Slack Tocken to send alerts on Slack about rejected expenses
+    - `FINANCE_TEAM_EMAIL`: Email address for the finance team (or any other team responsible for verifying expenses).
+  
+    For local development, create a `.env` file at the root of the project and add the variables listed above (as in `.env.examples`). For online deployment, configure these variables in your [environment settings](https://docs.abstra.io/cloud/envvars).
 
 3. **Dependencies**: To install the necessary dependencies for this project, a `requirements.txt` file is provided. This file includes all the required libraries.
 
