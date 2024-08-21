@@ -1,82 +1,71 @@
 # Abstra Template: Credit Card Reconciliation
 by Bruno Kuntz – CFO at [Deco.cx](https://deco.cx/)
 
-Workflow designed to check, justify and approve corporate purchases via credit cards.
-
-It features Abstra's native AI for automatically identifying and verifying information within invoices and receipts.
+## How it works:
+This project includes a credit card expense evaluation system implemented using Abstra and Python scripts. The system integrates with Slack to send alerts for rejected expenses.
 
 Integrations:
-- Starkbank API
-- Slack API
-- Native email
+  - Starkbank
+  - Slack
+    
+To customize this template for your team and build a lot more, [book a demonstration here.](https://meet.abstra.app/demo?url=template-credit-card-reconciliation)
 
-## Workflow Stages:
+![a credit card expense evaluation workflow built in Abstra](https://github.com/user-attachments/assets/0ef8c03a-be08-4564-b9ee-9aef9a0d98dd)
 
-![image](https://github.com/abstra-app/template-credit-card-reconciliation/assets/111701155/1d19c703-b5aa-4853-b139-dcc3d66b9f50)
+## Initial Configuration:
+To use this project, some initial configurations are necessary:
 
-## Stages Overview:
+1. **Python Version**: Ensure Python version 3.9 or higher is installed on your system.
+2. **Environment Variables**:
 
-### Get New Expenses (Hook):
-  - Triggered when there is a new purchase on a corporate card;
-  - Retrieve purchase and credit card information via StarkBank API;
-  - Add purchase information to the Abstra Table;
-  - Request the credit card holder to fill out a form via e-mail notification.
+  The following environment variables are required for both local development and online deployment:
+
+  - `SLACK_BOT_TOCKEN`: Slack Tocken to send alerts on Slack about rejected expenses
+  - `FINANCE_TEAM_EMAIL`: Email address for the finance team (or any other team responsible for verifying expenses).
+
+  For local development, create a `.env` file at the root of the project and add the variables listed above (as in            `.env.examples`). For online deployment, configure these variables in your [environment settings](https://docs.abstra.io/cloud/envvars).
+
+3. **Dependencies**: To install the necessary dependencies for this project, a `requirements.txt` file is provided. This file includes all the required libraries.
+
+   Follow these steps to install the dependencies:
+
+   1. Open your terminal and navigate to the project directory.
+   2. Run the following command to install the dependencies from `requirements.txt`:
+  
+      ```sh
+      pip install -r requirements.txt
+      ```
+4. **Database configuration**: Set up your database tables in Abstra Cloud Tables according to the schema defined in `abstra-tables.json`.
+
+    To automatically create the table schema, follow these steps:
+  
+    1. Open your terminal and navigate to the project directory.
+  
+    3. Run the following command to install the table schema from `abstra-tables.json`:
+       ```sh
+       abstra restore
+       ```
+5. **Internal Registration**: Team members and corporate cards (with card number as returned by API) need to be registered to the tables.
+   
+  For guidance on creating and managing tables in Abstra, refer to the [Abstra Tables documentation](https://docs.abstra.io/cloud/tables).
+
+## General Workflow:
+To implement the purchase request system use the following scripts:
+
+### Getting New Expenses:
+To retrieve and justify new purchases on corporate cards registered in the tables, use:
+  - **get_new_expenses.py**: Script triggered by a new purchase on a corporate card, retrieving purchase details from the Starkbank API.
+  - **justify_expense.py**: Script to generate a form requesting the credit card holder (as registered in the tables) to justify the pending expense and upload the purchase invoice, which is validated with Abstra AI.
 
 **IMPORTANT:**
   - Check for recent changes to the StarkBank API;
   - Configure the Hook in your StarkBank workspace with your POST URL.
-    
-### Justify Expense (Form):
-  - Justify each pending expense;
-  - Upload the purchase invoice;
-  - Check the invoice file via Abstra AI.
 
-### Check for Expenses Pending Approval (Job):
-  - Check daily for pending expenses;
-  - Request the finance team to fill out the approval form.
+### Approving Expenses:
+To retrieve and evaluate pending expenses, use:
+  - **check_for_expenses_pending_approval.py**: Daily script to get expenses for evaluation.
+  - **approve_expenses.py**: Script to generate a form where the expenses can be reviewed and approved/rejected.
+  - **save_expense_to_payables_table.py**: Script to save approved expenses to the `payables` database.
+  - **expense_reject_notification.py**: Script to send a notification on Slack about the rejection of an expense. 
 
-### Approve Expenses (Form):
-  - Review each expense;
-  - Approve or reject it.
-
-### Save Expense to Payables Table (Script):
-  - Add approved expenses to the ```payables``` table.
-
-### Notify Expense Rejected on Slack (Script):
-  - Notify the reason for rejection on Slack.
-
-## Tables Schema:
-  - team:
-
-    |name|email|
-    |:-:|:-:|
-    |```str```|```str```|
-
-  - corporate_cards:
-
-    |card_number|team_id|
-    |:-:|:-:|
-    |```str```|```reference to team(id)```|
-
-  - expenses:
-
-    |expense_time|value|tags|justification|invoice_uuid_path|approval_status|team_id|card_id|
-    |:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-    |```timestamp```|```int```|```json```|```str```|```str```|```boolean```|```reference to team(id)```|```reference to corporate_cards(id)```|
-    | | | |nullable|nullable|nullable| | |
-
-  - payables:
-
-    |value|expense_id|approved_by|
-    |:-:|:-:|:-:|
-    |```int```|```reference to expenses(id)```|```reference to team(id)```|
-
-## Variables Config:
-  - Add your Slack Bot Token in a ```.env``` file in the same directory:
-
-![image](https://github.com/abstra-app/template-credit-card-reconciliation/assets/111701155/1a096b5e-68b6-4b43-8b72-cbdfa44f88cb)
-  - Add the finance e-mail in the ```check_for_expenses_pending_approval.py``` Job:
-
-![image](https://github.com/abstra-app/template-credit-card-reconciliation/assets/111701155/314510cb-7049-44da-aed1-ea3ede2f03d0)
-
-  - Team members and corporate cards (with card number as returned by API) need to be registered to the tables.
+If you're interested in customizing this template for your team in under 30 minutes, [book a customization session here.](https://meet.abstra.app/demo?url=template-credit-card-reconciliation)
