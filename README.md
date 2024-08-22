@@ -20,7 +20,7 @@ To use this project, some initial configurations are necessary:
 
     The following environment variables are required for both local development and online deployment:
   
-    - `SLACK_BOT_TOCKEN`: Slack Tocken to send alerts on Slack about rejected expenses
+    - `SLACK_BOT_TOKEN`: Slack Token to send alerts on Slack about rejected expenses
     - `FINANCE_TEAM_EMAIL`: Email address for the finance team (or any other team responsible for verifying expenses).
   
     For local development, create a `.env` file at the root of the project and add the variables listed above (as in `.env.examples`). For online deployment, configure these variables in your [environment settings](https://docs.abstra.io/cloud/envvars).
