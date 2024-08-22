@@ -35,7 +35,9 @@ To use this project, some initial configurations are necessary:
       ```sh
       pip install -r requirements.txt
       ```
-4. **Database configuration**: Set up your database tables in Abstra Cloud Tables according to the schema defined in `abstra-tables.json`.
+4. **Access Control**: The generated form is protected by default. For local testing, no additional configuration is necessary. However, for cloud usage, you need to add your own access rules. For more information on how to configure access control, refer to the [Abstra access control documentation](https://docs.abstra.io/concepts/access-control).
+   
+5. **Database configuration**: Set up your database tables in Abstra Cloud Tables according to the schema defined in `abstra-tables.json`.
 
     To automatically create the table schema, follow these steps:
   
@@ -46,7 +48,14 @@ To use this project, some initial configurations are necessary:
        abstra restore
        ```
    For guidance on creating and managing tables in Abstra, refer to the [Abstra Tables documentation](https://docs.abstra.io/cloud/tables).
-5. **Internal Registration**: Team members and corporate cards (with card number as returned by API) need to be registered to the tables.
+   
+5. **Internal Registration**: Team members and corporate cards (with card number as returned by API) need to be registered to the tables `team` and `corporate_cards`.
+
+6. **Local Usage**: To access the local editor with the project, use the following command:
+
+   ```sh
+      abstra editor path/to/your/project/folder/
+   ```
    
 ## General Workflow:
 To implement this system use the following scripts:
