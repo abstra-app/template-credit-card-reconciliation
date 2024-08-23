@@ -74,6 +74,6 @@ To retrieve and evaluate pending expenses, use:
   - **check_for_expenses_pending_approval.py**: Daily script to get expenses for evaluation.
   - **approve_expenses.py**: Script to generate a form where the expenses can be reviewed and approved/rejected.
   - **save_expense_to_payables_table.py**: Script to save approved expenses to the `payables` database.
-  - **expense_reject_notification.py**: Script to send a notification on Slack about the rejection of an expense. 
+  - **expense_reject_notification.py**: Script to send a notification to the requester on Slack about the rejection of an expense. 
 
 If you're interested in customizing this template for your team in under 30 minutes, [book a customization session here.](https://meet.abstra.app/demo?url=template-credit-card-reconciliation)
