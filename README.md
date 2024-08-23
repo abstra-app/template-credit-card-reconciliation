@@ -16,16 +16,16 @@ To customize this template for your team and build a lot more, [book a demonstra
 To use this project, some initial configurations are necessary:
 
 1. **Python Version**: Ensure Python version 3.9 or higher is installed on your system.
-2. **Environment Variables**:
+2. **Integrations**: To connect to Slack, this template uses Abstra connectors. To connect, simply open your project in [Abstra Cloud Console](https://cloud.abstra.io/projects/), add the Slack connector, and authorize it.
+3. **Environment Variables**:
 
     The following environment variables are required for both local development and online deployment:
   
-    - `SLACK_BOT_TOKEN`: Slack Token to send alerts on Slack about rejected expenses
     - `FINANCE_TEAM_EMAIL`: Email address for the finance team (or any other team responsible for verifying expenses).
   
     For local development, create a `.env` file at the root of the project and add the variables listed above (as in `.env.examples`). For online deployment, configure these variables in your [environment settings](https://docs.abstra.io/cloud/envvars).
 
-3. **Dependencies**: To install the necessary dependencies for this project, a `requirements.txt` file is provided. This file includes all the required libraries.
+4. **Dependencies**: To install the necessary dependencies for this project, a `requirements.txt` file is provided. This file includes all the required libraries.
 
    Follow these steps to install the dependencies:
 
@@ -35,9 +35,9 @@ To use this project, some initial configurations are necessary:
       ```sh
       pip install -r requirements.txt
       ```
-4. **Access Control**: The generated form is protected by default. For local testing, no additional configuration is necessary. However, for cloud usage, you need to add your own access rules. For more information on how to configure access control, refer to the [Abstra access control documentation](https://docs.abstra.io/concepts/access-control).
+5. **Access Control**: The generated form is protected by default. For local testing, no additional configuration is necessary. However, for cloud usage, you need to add your own access rules. For more information on how to configure access control, refer to the [Abstra access control documentation](https://docs.abstra.io/concepts/access-control).
    
-5. **Database configuration**: Set up your database tables in Abstra Cloud Tables according to the schema defined in `abstra-tables.json`.
+6. **Database configuration**: Set up your database tables in Abstra Cloud Tables according to the schema defined in `abstra-tables.json`.
 
     To automatically create the table schema, follow these steps:
   
@@ -51,7 +51,7 @@ To use this project, some initial configurations are necessary:
    
 5. **Internal Registration**: Team members and corporate cards (with card number as returned by API) need to be registered to the tables `team` and `corporate_cards`.
 
-6. **Local Usage**: To access the local editor with the project, use the following command:
+7. **Local Usage**: To access the local editor with the project, use the following command:
 
    ```sh
       abstra editor path/to/your/project/folder/
