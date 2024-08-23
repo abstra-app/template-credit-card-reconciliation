@@ -1,4 +1,4 @@
-abstra==2.23.2
+abstra==2.25.4
 slack_sdk==3.27.2
 pandas==2.2.2
 starkcore==0.5.0

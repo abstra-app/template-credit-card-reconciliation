@@ -43,11 +43,12 @@ user = get_user().claims['email']
 
 try:
     user_team_row = select_one(TEAM_TABLE, where={'email': user})
+    if not user_team_row:
+        raise IndexError
 except IndexError:
     display(user_not_registered, end_program=True, size='large')
 
 user_team_id = user_team_row['id']
-
 
 # approve or reject expenses
 expenses = select(EXPENSES_TABLE, where={'approval_status': None})

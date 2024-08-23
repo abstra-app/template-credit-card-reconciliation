@@ -4,11 +4,11 @@ from abstra.tables import *
 import os
 import slack_sdk as slack
 from slack_sdk.errors import SlackApiError
-
+from abstra.connectors import get_access_token
 from texts import expense_rejected_message
 
 
-SLACK_TOKEN = os.environ["SLACK_BOT_TOKEN"]
+SLACK_TOKEN = get_access_token("slack").token
 client = slack.WebClient(token=SLACK_TOKEN)
 
 TEAM_TABLE = 'team'
