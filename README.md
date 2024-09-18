@@ -23,7 +23,7 @@ To use this project, some initial configurations are necessary:
   
     - `FINANCE_TEAM_EMAIL`: Email address for the finance team (or any other team responsible for verifying expenses).
   
-    For local development, create a `.env` file at the root of the project and add the variables listed above (as in `.env.examples`). For online deployment, configure these variables in your [environment settings](https://docs.abstra.io/cloud/envvars).
+    For local development, create a `.env` file at the root of the project and add the variables listed above (as in `.env.example`). For online deployment, configure these variables in your [environment settings](https://docs.abstra.io/cloud/envvars).
 
 4. **Dependencies**: To install the necessary dependencies for this project, a `requirements.txt` file is provided. This file includes all the required libraries.
 
