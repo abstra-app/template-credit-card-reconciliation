@@ -10,7 +10,7 @@ Integrations:
     
 To customize this template for your team and build a lot more, [book a demonstration here.](https://meet.abstra.app/demo?url=template-credit-card-reconciliation)
 
-![a credit card expense evaluation workflow built in Abstra](https://github.com/user-attachments/assets/0ef8c03a-be08-4564-b9ee-9aef9a0d98dd)
+![a credit card expense evaluation workflow built in Abstra](https://github.com/user-attachments/assets/97223b91-bc14-43b7-9159-7beccdff3b96)
 
 ## Initial Configuration:
 To use this project, some initial configurations are necessary:

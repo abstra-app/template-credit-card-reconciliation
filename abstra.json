@@ -1,21 +1,14 @@
 {
   "workspace": {
-    "id": null,
     "name": "Untitled Workspace",
+    "language": "en",
     "theme": "#FAFAFA",
     "logo_url": null,
     "favicon_url": null,
     "brand_name": " Credit Card Reconciliation",
     "main_color": "#6CDBA4",
-    "font_color": null,
     "font_family": null,
-    "language": "en"
-  },
-  "kanban": {
-    "access_control": {
-      "is_public": false,
-      "required_roles": []
-    }
+    "font_color": null
   },
   "home": {
     "access_control": {
@@ -30,16 +23,16 @@
       "title": "Check For Expenses Pending Approval",
       "schedule": "0 11 * * *",
       "workflow_position": [
-        396.0,
-        -192.0
+        345,
+        -195
       ],
       "transitions": [
         {
           "target_id": "7853f7bd-d76d-467a-9eff-0997d40858d9",
           "target_type": "forms",
-          "type": "jobs:finished",
+          "type": "task",
           "id": "2nxjcft",
-          "condition_value": null
+          "task_type": "finance_email"
         }
       ]
     }
@@ -52,17 +45,17 @@
       "title": "Get New Expenses",
       "enabled": true,
       "workflow_position": [
-        -120.0,
-        -180.0
+        -30,
+        -195
       ],
       "is_initial": true,
       "transitions": [
         {
           "target_id": "b6a5e441-25d3-4cb5-bfa8-4cf46ec811cc",
           "target_type": "forms",
-          "type": "hooks:finished",
+          "type": "task",
           "id": "1qpwwqi",
-          "condition_value": null
+          "task_type": "employee_email"
         }
       ]
     }
@@ -84,23 +77,23 @@
       "restart_button_text": null,
       "file": "approve_expenses.py",
       "workflow_position": [
-        396.0,
-        -60.0
+        390,
+        -45
       ],
       "transitions": [
         {
-          "target_id": "0fb8123d-2b6a-44ac-a961-6a5217718732",
-          "target_type": "iterators",
-          "type": "forms:finished",
-          "id": "ulpzkqj",
-          "condition_value": null
+          "target_id": "def0bad5-b34c-4bcf-a91d-783825cc3ea4",
+          "target_type": "scripts",
+          "type": "task",
+          "id": "wknr9az",
+          "task_type": "approved_expenses"
         },
         {
-          "target_id": "57eba553-c995-4bea-8072-91c22b231271",
-          "target_type": "iterators",
-          "type": "forms:finished",
-          "id": "u4azp8e",
-          "condition_value": null
+          "target_id": "ce490b37-8fd9-4611-a237-2c1796e05049",
+          "target_type": "scripts",
+          "type": "task",
+          "id": "z0qgd8x",
+          "task_type": "rejected_expenses"
         }
       ],
       "notification_trigger": {
@@ -128,8 +121,8 @@
       "restart_button_text": null,
       "file": "justify_expense.py",
       "workflow_position": [
-        -120.0,
-        0.0
+        -30,
+        0
       ],
       "transitions": [],
       "notification_trigger": {
@@ -149,8 +142,8 @@
       "title": "Notify Expense Rejected On Slack",
       "is_initial": false,
       "workflow_position": [
-        540.0,
-        204.0
+        525,
+        135
       ],
       "transitions": []
     },
@@ -160,52 +153,13 @@
       "title": "Save Expense To Payables Table",
       "is_initial": false,
       "workflow_position": [
-        240.0,
-        204.0
+        210,
+        135
       ],
       "transitions": []
     }
   ],
-  "iterators": [
-    {
-      "id": "0fb8123d-2b6a-44ac-a961-6a5217718732",
-      "title": "rejected_expenses",
-      "variable_name": "rejected_expenses",
-      "workflow_position": [
-        540.0,
-        72.0
-      ],
-      "transitions": [
-        {
-          "target_id": "ce490b37-8fd9-4611-a237-2c1796e05049",
-          "target_type": "scripts",
-          "type": "iterators:each",
-          "id": "xaplt5v",
-          "condition_value": null
-        }
-      ],
-      "item_name": "expense"
-    },
-    {
-      "id": "57eba553-c995-4bea-8072-91c22b231271",
-      "title": "approved_expenses",
-      "variable_name": "approved_expenses",
-      "workflow_position": [
-        240.0,
-        72.0
-      ],
-      "transitions": [
-        {
-          "target_id": "def0bad5-b34c-4bcf-a91d-783825cc3ea4",
-          "target_type": "scripts",
-          "type": "iterators:each",
-          "id": "5p59fbm",
-          "condition_value": null
-        }
-      ],
-      "item_name": "expense"
-    }
-  ],
-  "conditions": [],
-  "version": "11.0"
+  "agents": [],
+  "clients": [],
+  "version": "13.0"
 }

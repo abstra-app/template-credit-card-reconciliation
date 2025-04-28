@@ -1,4 +1,4 @@
-from abstra.workflows import *
+from abstra.tasks import *
 from abstra.tables import *
 from abstra.forms import *
 from abstra.ai import prompt
@@ -10,6 +10,9 @@ from texts import not_invoice_error, value_mismatch_error
 from datetime import datetime
 import uuid, os
 
+tasks = get_tasks()
+if tasks:
+    task = tasks[0]
 
 EXPENSES_TABLE = 'expenses'
 TEAM_TABLE = 'team'
@@ -76,6 +79,7 @@ except IndexError:
 expenses = select(EXPENSES_TABLE, where={'team_id': employee_team_id, 'approval_status': None, 'justification': None})
 
 if not expenses:
+    task.complete()
     display(no_expenses_pending_justification, end_program=True, size='large')
 
 
@@ -101,3 +105,6 @@ for page in justifications:
         f.write(invoice_file.read())
 
     update(EXPENSES_TABLE, where={'id': expense_id}, set={'justification': page['justification'], 'invoice_uuid_path': invoice_uuid_path})
+
+
+task.complete()

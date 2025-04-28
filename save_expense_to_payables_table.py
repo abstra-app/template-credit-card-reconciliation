@@ -1,9 +1,11 @@
-from abstra.workflows import *
+from abstra.tasks import *
 from abstra.tables import *
 
 PAYABLES_TABLE = 'payables'
 
-expense = get_data('expense')
+task = get_trigger_task()
+payload = task.get_payload()
+expense = payload["expense"]
 
 data = {
     'value': expense['value'],
@@ -12,3 +14,5 @@ data = {
 }
 
 insert(PAYABLES_TABLE, data)
+
+task.complete()

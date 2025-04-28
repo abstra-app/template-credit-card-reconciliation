@@ -1,10 +1,10 @@
-from abstra.workflows import *
+from abstra.tasks import *
 from abstra.tables import *
 import abstra.hooks as ah
 
 import starkbank
 
-from texts import user_not_registered, thread_title_pending_justification
+from texts import user_not_registered
 
 
 EXPENSES_TABLE = 'expenses'
@@ -59,5 +59,6 @@ data = {
 
 insert(EXPENSES_TABLE, data)
 
-set_data("employee_email", employee_email)
-set_title(thread_title_pending_justification)
+payload = {"employee_email": employee_email}
+
+send_task("employee_email", payload)

@@ -1,4 +1,4 @@
-from abstra.workflows import *
+from abstra.tasks import *
 from abstra.tables import *
 from abstra.forms import *
 
@@ -6,6 +6,11 @@ import pandas as pd
 from datetime import datetime
 from texts import expense_summary_approval, user_not_registered, no_expenses_pending_approval
 
+# receiving task to get notification e-mail
+tasks = get_tasks()
+if tasks:
+    task = tasks[0]
+    task.complete()
 
 EXPENSES_TABLE = 'expenses'
 TEAM_TABLE = "team"
@@ -73,7 +78,15 @@ for i in range(len(expenses)):
         approved_expenses.append(expenses[i])
 
     update(EXPENSES_TABLE, where={'id': expenses[i]['id']}, set={'approval_status': approval_status})
-    
 
-set_data("approved_expenses", approved_expenses)
-set_data("rejected_expenses", rejected_expenses)
+if approved_expenses:
+    for expense in approved_expenses:
+        payload = {}
+        payload["expense"] = expense
+        send_task("approved_expenses", payload)
+if rejected_expenses:
+    for expense in rejected_expenses:
+        payload = {}
+        payload["expense"] = expense
+        send_task("rejected_expenses", payload)
+
