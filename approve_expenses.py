@@ -8,9 +8,7 @@ from texts import expense_summary_approval, user_not_registered, no_expenses_pen
 
 # receiving task to get notification e-mail
 tasks = get_tasks()
-if tasks:
-    task = tasks[0]
-    task.complete()
+
 
 EXPENSES_TABLE = 'expenses'
 TEAM_TABLE = "team"
@@ -42,51 +40,51 @@ def run_steps_page(expenses):
 
     return run_steps(expense_pages)
 
+for task in tasks:
+    # get user information
+    user = get_user().claims['email']
 
-# get user information
-user = get_user().claims['email']
+    try:
+        user_team_row = select_one(TEAM_TABLE, where={'email': user})
+        if not user_team_row:
+            raise IndexError
+    except IndexError:
+        display(user_not_registered, end_program=True, size='large')
 
-try:
-    user_team_row = select_one(TEAM_TABLE, where={'email': user})
-    if not user_team_row:
-        raise IndexError
-except IndexError:
-    display(user_not_registered, end_program=True, size='large')
+    user_team_id = user_team_row['id']
 
-user_team_id = user_team_row['id']
+    # approve or reject expenses
+    expenses = select(EXPENSES_TABLE, where={'approval_status': None})
+    approved_expenses = []
+    rejected_expenses = []
 
-# approve or reject expenses
-expenses = select(EXPENSES_TABLE, where={'approval_status': None})
-approved_expenses = []
-rejected_expenses = []
+    if not expenses:
+        display(no_expenses_pending_approval, end_program=True, size='large')
 
-if not expenses:
-    display(no_expenses_pending_approval, end_program=True, size='large')
+    expenses_approval_info = run_steps_page(expenses)
 
-expenses_approval_info = run_steps_page(expenses)
+    for i in range(len(expenses)):
+        approval_status = expenses_approval_info[i]['approval_status']
+        expenses[i]['approval_status'] = approval_status
 
-for i in range(len(expenses)):
-    approval_status = expenses_approval_info[i]['approval_status']
-    expenses[i]['approval_status'] = approval_status
+        if approval_status == False:
+            expenses[i]['reject_message'] = expenses_approval_info[i]['reject_message']
+            rejected_expenses.append(expenses[i])
 
-    if approval_status == False:
-        expenses[i]['reject_message'] = expenses_approval_info[i]['reject_message']
-        rejected_expenses.append(expenses[i])
+        else:
+            expenses[i]['approved_by'] = user_team_id
+            approved_expenses.append(expenses[i])
 
-    else:
-        expenses[i]['approved_by'] = user_team_id
-        approved_expenses.append(expenses[i])
+        update(EXPENSES_TABLE, where={'id': expenses[i]['id']}, set={'approval_status': approval_status})
 
-    update(EXPENSES_TABLE, where={'id': expenses[i]['id']}, set={'approval_status': approval_status})
-
-if approved_expenses:
-    for expense in approved_expenses:
-        payload = {}
-        payload["expense"] = expense
-        send_task("approved_expenses", payload)
-if rejected_expenses:
-    for expense in rejected_expenses:
-        payload = {}
-        payload["expense"] = expense
-        send_task("rejected_expenses", payload)
+    if approved_expenses:
+        for expense in approved_expenses:
+            payload = {}
+            payload["expense"] = expense
+            send_task("approved_expenses", payload)
+    if rejected_expenses:
+        for expense in rejected_expenses:
+            payload = {}
+            payload["expense"] = expense
+            send_task("rejected_expenses", payload)
 

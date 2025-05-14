@@ -11,8 +11,7 @@ from datetime import datetime
 import uuid, os
 
 tasks = get_tasks()
-if tasks:
-    task = tasks[0]
+
 
 EXPENSES_TABLE = 'expenses'
 TEAM_TABLE = 'team'
@@ -67,44 +66,45 @@ def run_steps_page(pending_expenses):
 
     return run_steps(pending_pages)
 
+for task in tasks:
 
-# get user information
-employee_email = get_user().claims['email']
+    # get user information
+    employee_email = get_user().claims['email']
 
-try:
-    employee_team_id = select_one(TEAM_TABLE, where={'email': employee_email})['id']
-except IndexError:
-    display(user_not_registered, end_program=True, size='large')
+    try:
+        employee_team_id = select_one(TEAM_TABLE, where={'email': employee_email})['id']
+    except IndexError:
+        display(user_not_registered, end_program=True, size='large')
 
-expenses = select(EXPENSES_TABLE, where={'team_id': employee_team_id, 'approval_status': None, 'justification': None})
+    expenses = select(EXPENSES_TABLE, where={'team_id': employee_team_id, 'approval_status': None, 'justification': None})
 
-if not expenses:
+    if not expenses:
+        task.complete()
+        display(no_expenses_pending_justification, end_program=True, size='large')
+
+
+    # build justification pages
+    justifications = run_steps_page(expenses)
+
+    for i in range(len(expenses)):
+        justifications[i]['id'] = expenses[i]['id']
+
+
+    # update expenses with justifications and invoice paths / save invoices
+    if not os.path.exists(INVOICE_DIR):
+        os.makedirs(INVOICE_DIR)
+
+    for page in justifications:
+        expense_id = page['id']
+
+        invoice_uuid_path = f"{uuid.uuid4()}.jpg"
+        invoice_file = page['invoice'].file
+        invoice_path = INVOICE_DIR / invoice_uuid_path
+
+        with open(invoice_path, 'wb') as f:
+            f.write(invoice_file.read())
+
+        update(EXPENSES_TABLE, where={'id': expense_id}, set={'justification': page['justification'], 'invoice_uuid_path': invoice_uuid_path})
+
+
     task.complete()
-    display(no_expenses_pending_justification, end_program=True, size='large')
-
-
-# build justification pages
-justifications = run_steps_page(expenses)
-
-for i in range(len(expenses)):
-    justifications[i]['id'] = expenses[i]['id']
-
-
-# update expenses with justifications and invoice paths / save invoices
-if not os.path.exists(INVOICE_DIR):
-    os.makedirs(INVOICE_DIR)
-
-for page in justifications:
-    expense_id = page['id']
-
-    invoice_uuid_path = f"{uuid.uuid4()}.jpg"
-    invoice_file = page['invoice'].file
-    invoice_path = INVOICE_DIR / invoice_uuid_path
-
-    with open(invoice_path, 'wb') as f:
-        f.write(invoice_file.read())
-
-    update(EXPENSES_TABLE, where={'id': expense_id}, set={'justification': page['justification'], 'invoice_uuid_path': invoice_uuid_path})
-
-
-task.complete()
